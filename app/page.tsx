@@ -33,6 +33,9 @@ const PetRegistrationForm: React.FC = () => {
   const [Phone, setPhone] = useState<string | null>("");
   const [Email, setEmail] = useState<string | null>("");
   const [HomeType, setHomeType] = useState<string | null>("");
+  //step 3 History
+  const [HowManyYear, setHowManyYear] = useState<number>(0);
+  const [History, setHistory] = useState<string | null>("");
 
   const switchLanguage = () => {
     setLanguage(language === "th" ? "en" : "th");
@@ -62,6 +65,10 @@ const PetRegistrationForm: React.FC = () => {
       return false;
     }
     if (currentStep === 1 && (!Address || !Phone || !Email || !HomeType)) {
+      setIsModalError(true);
+      return false;
+    }
+    if (currentStep === 2 && (!History || HowManyYear < 0)) {
       setIsModalError(true);
       return false;
     }
@@ -197,7 +204,7 @@ const PetRegistrationForm: React.FC = () => {
         height={1024}
         className="rounded-t-3xl"
       />
-      {currentStep === 2 ? (
+      {currentStep === 3 ? (
         <div className="flex flex-col px-6 my-4 ">
           <h1 className="text-3xl font-bold text-center my-4">
             {/* ข้อมูล */}
@@ -450,6 +457,42 @@ const PetRegistrationForm: React.FC = () => {
         )}
 
         {currentStep === 2 && (
+          <div className="flex flex-col gap-4">
+            <div className="grid grid-cols-1 gap-4 items-center">
+              <div className="inline">
+                <label className="block mb-2">
+                  {/* คุณเลี้ยงสัตว์มาแล้วกี่ปี? */}
+                  {t("how_many_years_have_you_raised_animals")}
+                </label>
+                <input
+                  id="howmanyyear"
+                  name="howmanyyear"
+                  type="number"
+                  value={HowManyYear || undefined}
+                  onChange={(e) => setHowManyYear(Number(e.target.value))}
+                  className="border px-4 py-2 w-full rounded-xl shadow-lg shadow-black/25 text-black outline-2 outline-yellow-900"
+                  required
+                />
+              </div>
+              <div className="inline">
+                <label className="block mb-2">
+                  {/* เล่าประวัติการเลี้ยงสัตว์ให้เราฟังหน่อย */}
+                  {t("tell_us_about_your_animal_raising_history")}
+                </label>
+                <textarea
+                  id="history"
+                  name="history"
+                  value={History || undefined}
+                  onChange={(e) => setHistory(e.target.value)}
+                  className="border px-4 py-2 w-full max-h-36 min-h-36 overflow-hidden rounded-xl shadow-lg shadow-black/25 text-black outline-2 outline-yellow-900 whitespace-pre-line"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+        )}
+
+        {currentStep === 3 && (
           <div className="flex flex-col gap-4 text-center text-xl">
             <div className="p-4 border-dashed border-4 border-white/50 rounded-lg">
               {preview ? (
@@ -516,7 +559,7 @@ const PetRegistrationForm: React.FC = () => {
                   {/* ที่อยู่ ( ปัจจุบัน ) */}
                   {t("current_address")}
                 </label>
-                <div className="px-4 py-2 text-xl text-center w-full border-dashed border-4 border-white/50 rounded-xl bg-black/25 shadow-lg shadow-black/25 text-white">
+                <div className="px-4 py-2 text-xl whitespace-pre-line text-left w-full border-dashed border-4 border-white/50 rounded-xl bg-black/25 shadow-lg shadow-black/25 text-white">
                   {Address}
                 </div>
               </div>
@@ -551,6 +594,24 @@ const PetRegistrationForm: React.FC = () => {
                     : t("dormitory")}
                 </div>
               </div>
+              <div className="inline">
+                <label className="block mb-2">
+                  {/* คุณเลี้ยงสัตว์มาแล้วกี่ปี? */}
+                  {t("how_many_years_have_you_raised_animals")}
+                </label>
+                <div className="px-4 py-2 text-xl text-center w-full border-dashed border-4 border-white/50 rounded-xl bg-black/25 shadow-lg shadow-black/25 text-white">
+                  {HowManyYear}
+                </div>
+              </div>
+              <div className="inline">
+                <label className="block mb-2">
+                  {/* เล่าประวัติการเลี้ยงสัตว์ของคุณให้เราฟังหน่อย */}
+                  {t("tell_us_about_your_animal_raising_history")}
+                </label>
+                <div className="px-4 py-2 text-xl whitespace-pre-line text-left w-full border-dashed border-4 border-white/50 rounded-xl bg-black/25 shadow-lg shadow-black/25 text-white">
+                  {History}
+                </div>
+              </div>
             </div>
           </div>
         )}
@@ -564,17 +625,17 @@ const PetRegistrationForm: React.FC = () => {
             <button
               type="button"
               onClick={handleBack}
-              className="bg-gray-300 text-black px-4 py-2 rounded-full"
+              className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-full"
             >
               {/* ย้อนกลับ */}
               {t("back")}
             </button>
           )}
-          {currentStep < 2 ? (
+          {currentStep < 3 ? (
             <button
               type="button"
               onClick={handleNext}
-              className="bg-blue-500 text-white px-4 py-2 rounded-full"
+              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-full"
             >
               {/* ถัดไป */}
               {t("next")}
@@ -583,7 +644,7 @@ const PetRegistrationForm: React.FC = () => {
             <button
               type="button"
               onClick={handleSubmit}
-              className="bg-green-500 text-white px-4 py-2 rounded-full"
+              className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-full"
             >
               {/* ส่งข้อมูล */}
               {t("submit")}

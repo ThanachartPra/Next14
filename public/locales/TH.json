@@ -28,5 +28,7 @@
   "ok": "โอเค",
   "error": "เกิดข้อผิดพลาด",
   "please_fill_in_information": "กรุณากรอกข้อมูล",
-  "register_success": "ลงทะเบียนสำเร็จ"
+  "register_success": "ลงทะเบียนสำเร็จ",
+  "how_many_years_have_you_raised_animals": "คุณเลี้ยงสัตว์มาแล้วกี่ปี?",
+  "tell_us_about_your_animal_raising_history": "เล่าประวัติการเลี้ยงสัตว์ของคุณให้เราฟังหน่อย"
 }

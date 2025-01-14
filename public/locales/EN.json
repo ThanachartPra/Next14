@@ -26,7 +26,9 @@
   "next": "Next",
   "submit": "Submit",
   "ok": "OK",
-  "error":"ERROR",
-  "please_fill_in_information":"Please fill in information",
-  "register_success":"Register Successfully"
+  "error": "ERROR",
+  "please_fill_in_information": "Please fill in information",
+  "register_success": "Register Successfully",
+  "how_many_years_have_you_raised_animals": "How many years have you raised animals?",
+  "tell_us_about_your_animal_raising_history": "Tell us about your animal-raising history."
 }
